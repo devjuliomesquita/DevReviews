@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DevReviews_API.props" />
+</Project>
