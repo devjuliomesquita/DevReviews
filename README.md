@@ -1,5 +1,7 @@
 # DevReviews
 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/devjuliomesquita/DevReviews/blob/main/LICENSE.txt) 
+
 Foi desenvolvida uma API REST completa de gerenciamento de produtos e suas avaliações de um e-Commerce. 
 
 ## Tecnologias e práticas utilizadas
