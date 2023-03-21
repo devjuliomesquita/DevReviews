@@ -30,3 +30,5 @@ C:\Users\julio.martins\Documents\GitHub\DevReviews\DevReviews\DevReviews_API\obj
 C:\Users\julio.martins\Documents\GitHub\DevReviews\DevReviews\DevReviews_API\obj\Debug\net6.0\DevReviews_API.pdb
 C:\Users\julio.martins\Documents\GitHub\DevReviews\DevReviews\DevReviews_API\obj\Debug\net6.0\DevReviews_API.genruntimeconfig.cache
 C:\Users\julio.martins\Documents\GitHub\DevReviews\DevReviews\DevReviews_API\obj\Debug\net6.0\ref\DevReviews_API.dll
+C:\Users\julio.martins\Documents\GitHub\DevReviews\DevReviews\DevReviews_API\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\julio.martins\Documents\GitHub\DevReviews\DevReviews\DevReviews_API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

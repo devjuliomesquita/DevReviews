@@ -1,4 +1,5 @@
 using DevReviews_API.Persistence;
+using DevReviews_API.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +10,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
 //Injeção de Dependência do DbContext
 builder.Services.AddSingleton<DevReviewsDbContext>();
+//Chamando o AutoMapper
+builder.Services.AddAutoMapper(typeof(ProductProfile));
+
+var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

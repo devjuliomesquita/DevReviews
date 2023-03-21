@@ -1,4 +1,5 @@
-﻿using DevReviews_API.Entities;
+﻿using AutoMapper;
+using DevReviews_API.Entities;
 using DevReviews_API.Models;
 using DevReviews_API.Persistence;
 using Microsoft.AspNetCore.Http;
@@ -13,15 +14,24 @@ namespace DevReviews_API.Controllers
 
         //Instaciando no construtor
         private readonly DevReviewsDbContext _DevReviewsDbContext;
-        public ProductsController(DevReviewsDbContext devReviewsDbContext)
+        private readonly IMapper _IMapper;
+        public ProductsController(DevReviewsDbContext devReviewsDbContext, IMapper iMapper)
         {
             _DevReviewsDbContext = devReviewsDbContext;
+            _IMapper = iMapper;
         }
         [HttpGet]
         public IActionResult GetAll()
         {
             var products = _DevReviewsDbContext.Products;
-            return Ok(products);
+            
+            //Sem AutoMapper
+            //var productViewModel = products.Select(p => new ProductViewModel(p.Id, p.Title, p.Price));
+
+            //Com AutoMapper
+            var productViewModel = _IMapper.Map<List<ProductViewModel>>(products);
+            
+            return Ok(productViewModel);
         }
         //api/products/{id}
         [HttpGet("{id}")]
@@ -33,7 +43,24 @@ namespace DevReviews_API.Controllers
                 return NotFound();
             }
             //Se não achar retona NOtFound
-            return Ok();
+
+            //Sem AutoMapper
+            //var reviewsViewModel = products
+            //    .Reviews
+            //    .Select(r => new ProductReviewViewModel(r.Id, r.Author, r.Rating, r.Comments, r.RegisteredAt))
+            //    .ToList();
+            //var productDetails = new ProductDetailsViewModel(
+            //    products.Id,
+            //    products.Title,
+            //    products.Description,
+            //    products.Price,
+            //    products.RegisteredAt,
+            //    reviewsViewModel
+            //    );
+
+            //Com AutoMapper
+            var productDetails = _IMapper.Map<List<ProductDetailsViewModel>>(products);
+            return Ok(productDetails);
         }
         //Criação - Cadastro de Objetos
         [HttpPost]
