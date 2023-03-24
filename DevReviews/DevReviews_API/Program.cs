@@ -10,6 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Chamando a COnection string 
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
+
 //Injeção de Dependência do DbContext
 builder.Services.AddSingleton<DevReviewsDbContext>();
 //Chamando o AutoMapper
