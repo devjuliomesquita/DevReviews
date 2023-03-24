@@ -18,6 +18,11 @@ namespace DevReviews_API.Persistence
             modelBuilder.Entity<Product>(p => {
                 p.ToTable("Tb_Product");
                 p.HasKey(p => p.Id);
+
+                p   .HasMany(pp => pp.Reviews)
+                    .WithOne()
+                    .HasForeignKey(pp => pp.ProductId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
             modelBuilder.Entity<ProductReviews>(pr => {
                 pr.ToTable("Tb_ProductReviews");
