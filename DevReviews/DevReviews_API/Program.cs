@@ -1,5 +1,6 @@
 using DevReviews_API.Persistence;
 using DevReviews_API.Profiles;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,11 +12,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Chamando a COnection string 
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
+builder.Services.AddDbContext<DevReviewsDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
 
 //Injeção de Dependência do DbContext
-builder.Services.AddSingleton<DevReviewsDbContext>();
+builder.Services.AddDbContext<DevReviewsDbContext>();
 //Chamando o AutoMapper
 builder.Services.AddAutoMapper(typeof(ProductProfile));
 
