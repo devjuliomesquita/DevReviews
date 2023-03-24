@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using DevReviews_API.Entities;
 using DevReviews_API.Models;
 using DevReviews_API.Persistence;
+using DevReviews_API.Persistence.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,32 +12,35 @@ namespace DevReviews_API.Controllers
     [ApiController]
     public class ProductReviewsController : ControllerBase
     {
-        private readonly DevReviewsDbContext _devReviewsDbContext;
         private readonly IMapper _mapper;
-        public ProductReviewsController(DevReviewsDbContext devReviewsDbContext, IMapper mapper)
+        private readonly IProductRepository _repository;
+        public ProductReviewsController(IProductRepository repository, IMapper mapper)
         {
-            _devReviewsDbContext = devReviewsDbContext;
             _mapper = mapper;
+            _repository = repository;
         }
         // GET url: api/products/{idProduct}/pruductreviews/{id}
         [HttpGet("{id}")]
-        public IActionResult GetById(int productId,  int id)
+        public async Task<IActionResult> GetById(int productId,  int id)
         {
-            var productReviews = _devReviewsDbContext.ProductReviews.SingleOrDefault(p => p.Id == id);
-            if(productReviews == null)
+            var productReview = await _repository.GetReviewByIdAsync(id);
+            if (productReview == null)
             {
                 return NotFound();
             }
-            var productDetails = _mapper.Map<ProductReviewDetailsViewModel>(productReviews);
-            //Se não existir o Id especiicado retornar NotFound();
+            var productDetails = _mapper.Map<ProductReviewDetailsViewModel>(productReview);
+
             return Ok(productDetails);
         }
         // POST url: api/products/{idProduct}/pruductreviews
         [HttpPost]
-        public IActionResult Post(int productId, AddProductReviewsInputModel AddProductReviewsInputModel)
+        public async Task<IActionResult> Post(int productId, AddProductReviewsInputModel model)
         {
-            //Se estiver com os dados inválidos retornar o badRequest()
-            return CreatedAtAction(nameof(GetById), new {id = 1, productId = 2}, AddProductReviewsInputModel);
+            var productReview = new ProductReviews(model.Author, model.Comments, model.Rating, productId);
+
+            await _repository.AddReviewAsync(productReview);
+
+            return CreatedAtAction(nameof(GetById), new { id = productReview.Id, productId = productId }, model);
         }
     }
 }
