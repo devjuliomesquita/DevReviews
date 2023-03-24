@@ -2,7 +2,7 @@
 {
     public class ProductReviews
     {
-        public ProductReviews(string author, string comments, int rating, DateTime registeredAt, int productId)
+        public ProductReviews(string author, string comments, int rating, int productId)
         {
             Author = author;
             Comments = comments;

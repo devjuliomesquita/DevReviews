@@ -4,6 +4,7 @@ using DevReviews_API.Models;
 using DevReviews_API.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevReviews_API.Controllers
 {
@@ -37,7 +38,10 @@ namespace DevReviews_API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var products = _DevReviewsDbContext.Products.SingleOrDefault(p => p.Id == id);
+            var products = _DevReviewsDbContext
+                .Products
+                .Include(p => p.Reviews)
+                .SingleOrDefault(p => p.Id == id);
             if(products == null)
             {
                 return NotFound();
@@ -72,6 +76,7 @@ namespace DevReviews_API.Controllers
                 addProductInputModel.Price);
 
             _DevReviewsDbContext.Products.Add(product);
+            _DevReviewsDbContext.SaveChanges();
 
             return CreatedAtAction(nameof(GetById), new {id = product.Id}, addProductInputModel);
         }
@@ -89,6 +94,8 @@ namespace DevReviews_API.Controllers
                 return NotFound();
             }
             product.Update(updateProductInputModel.Description, updateProductInputModel.Price);
+            _DevReviewsDbContext.Products.Update(product);
+            _DevReviewsDbContext.SaveChanges();
             return NoContent();
         }
 
