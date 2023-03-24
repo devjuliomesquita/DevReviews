@@ -1,4 +1,5 @@
 using DevReviews_API.Persistence;
+using DevReviews_API.Persistence.Repository;
 using DevReviews_API.Profiles;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ builder.Services.AddDbContext<DevReviewsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
 
 //Injeção de Dependência do DbContext
-builder.Services.AddDbContext<DevReviewsDbContext>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 //Chamando o AutoMapper
 builder.Services.AddAutoMapper(typeof(ProductProfile));
 

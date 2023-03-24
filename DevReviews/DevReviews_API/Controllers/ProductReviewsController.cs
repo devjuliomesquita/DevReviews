@@ -36,7 +36,7 @@ namespace DevReviews_API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(int productId, AddProductReviewsInputModel model)
         {
-            var productReview = new ProductReviews(model.Author, model.Comments, model.Rating, productId);
+            var productReview = new ProductReviews(model.Author, model.Rating, model.Comments, productId);
 
             await _repository.AddReviewAsync(productReview);
 
