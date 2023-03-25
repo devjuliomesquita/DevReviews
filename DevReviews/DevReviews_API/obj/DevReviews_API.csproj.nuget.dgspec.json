@@ -68,6 +68,10 @@
               "target": "Package",
               "version": "[6.0.15, )"
             },
+            "Serilog.Exceptions": {
+              "target": "Package",
+              "version": "[8.4.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"

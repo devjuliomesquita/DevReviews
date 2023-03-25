@@ -6,6 +6,7 @@ using DevReviews_API.Persistence.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace DevReviews_API.Controllers
 {
@@ -67,9 +68,12 @@ namespace DevReviews_API.Controllers
         }
         //Criação - Cadastro de Objetos
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(AddProductInputModel model)
         {
             var product = new Product(model.Title, model.Description, model.Price);
+            Log.Information("Método POST chamado!");
 
             await _repository.AddAsync(product);
 
